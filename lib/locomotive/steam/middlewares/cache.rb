@@ -1,3 +1,4 @@
+puts "[KOALA] loading cache..."
 module Locomotive
   module Steam
     module Middlewares
@@ -26,9 +27,12 @@ module Locomotive
           key = cache_key(env)
 
           if marshaled = Rails.cache.read(key)
+            Rails.logger.info "CACHE INFO :: read key OK :: Cache.fetch_cached_response() :: key -> #{key}"
             Marshal.load(marshaled)
           else
+            Rails.logger.info "CACHE INFO :: read key NOT OK:: Cache.fetch_cached_response() :: key -> #{key}"
             app.call(env).tap do |response|
+              Rails.logger.warn "CACHE INFO :: write key -> #{key}"
               Rails.cache.write(key, marshal(response))
             end
           end
@@ -37,7 +41,8 @@ module Locomotive
         def marshal(response)
           code, headers, body = response
 
-          _headers = headers.dup.reject! { |key, val| key =~ /[^0-9A-Z_]/ || !val.respond_to?(:to_str) }
+          # only keep string value headers
+          _headers = headers.reject { |key, val| !val.respond_to?(:to_str) }
 
           Marshal.dump([code, _headers, body])
         end
@@ -66,3 +71,4 @@ module Locomotive
     end
   end
 end
+puts "[KOALA] loaded cache"

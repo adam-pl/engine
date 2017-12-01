@@ -46,10 +46,10 @@ module Locomotive
 
           <div class="alert alert-danger" role="alert">
             <h4 class="text-center">
-              We're sorry, but something went wrong.
+              Przepraszamy, ale coś poszło nie tak. Spróbuj odświeżyć stronę.
             </h4>
             <p class="text-center">
-              If you are the application owner check the logs for more information.
+              Jeśli sytuacja się powtórzy powiadom administratora strony o zaistniałym problemie.
             </p>
           </div>
         </div>
