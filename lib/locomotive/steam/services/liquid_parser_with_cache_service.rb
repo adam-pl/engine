@@ -24,7 +24,7 @@ module Locomotive
 
       def read_template_from_cache(page)
         if marshaled = Rails.cache.read(cache_key(page))
-          Rails.logger.info "CACHE INFO :: read key OK :: LPWCS.read_template_from_cache() :: key -> #{key}"
+          Rails.logger.info "CACHE INFO :: read key OK :: LPWCS.read_template_from_cache() :: page -> #{page}"
           Marshal.load(marshaled)
         end
       end
